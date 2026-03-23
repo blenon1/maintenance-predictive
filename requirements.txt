@@ -1,0 +1,90 @@
+# =============================================================
+# requirements.txt
+# Projet : Maintenance Prédictive Industrielle – M2 EFREI 2025
+# =============================================================
+# Installation :
+#   pip install -r requirements.txt
+#
+# Environnement recommandé :
+#   Python 3.11+
+#   python -m venv venv && source venv/bin/activate  (Linux/macOS)
+#   python -m venv venv && venv\Scripts\activate      (Windows)
+# =============================================================
+
+
+# ─── Manipulation de données ──────────────────────────────────
+pandas>=2.0.0               # DataFrames, lecture CSV, statistiques descriptives
+numpy>=1.24.0               # Calculs numériques, tableaux multi-dimensionnels
+scipy>=1.11.0               # Tests statistiques (skewness, IQR)
+
+
+# ─── Machine Learning ─────────────────────────────────────────
+scikit-learn>=1.3.0         # Pipeline, StandardScaler, OneHotEncoder,
+                            # LogisticRegression, RandomForest, MLPClassifier,
+                            # metrics, permutation_importance, train_test_split
+xgboost>=2.0.0              # GradientBoostingModel (XGBClassifier)
+
+
+# ─── Deep Learning ────────────────────────────────────────────
+# MLPClassifier est fourni par scikit-learn (ci-dessus).
+# Pour des architectures plus avancées (LSTM, CNN), décommenter :
+# tensorflow>=2.13.0
+# torch>=2.0.0
+
+
+# ─── Interprétabilité ─────────────────────────────────────────
+shap>=0.43.0                # SHAP values : TreeExplainer, KernelExplainer,
+                            # summary_plot, waterfall_plot, dependence_plot
+
+
+# ─── Visualisation ────────────────────────────────────────────
+matplotlib>=3.7.0           # Graphiques statiques (EDA, feature importance)
+seaborn>=0.12.0             # Heatmaps, pairplots, boxplots enrichis
+plotly>=5.15.0              # Graphiques interactifs (dashboard Streamlit)
+
+
+# ─── Dashboard ────────────────────────────────────────────────
+streamlit>=1.30.0           # Interface décisionnelle interactive (dashboard/app.py)
+
+
+# ─── API REST ─────────────────────────────────────────────────
+fastapi>=0.110.0            # Framework API REST (api/main.py)
+uvicorn[standard]>=0.27.0   # Serveur ASGI pour FastAPI
+pydantic>=2.0.0             # Validation des schémas d'entrée/sortie de l'API
+
+
+# ─── Sérialisation des modèles ────────────────────────────────
+joblib>=1.3.0               # Sérialisation modèles sklearn (save/load .pkl)
+
+
+# ─── Tests API ────────────────────────────────────────────────
+requests>=2.31.0            # Requêtes HTTP pour les tests (api/test_api.py)
+
+
+# ─── Notebook EDA ─────────────────────────────────────────────
+jupyter>=1.0.0              # Environnement notebook
+notebook>=7.0.0             # Interface Jupyter Notebook
+ipykernel>=6.25.0           # Kernel Python pour Jupyter
+ipywidgets>=8.0.0           # Widgets interactifs dans les notebooks
+
+
+# ─── Qualité du code (optionnel, recommandé) ──────────────────
+# black>=23.0.0             # Formateur de code automatique
+# flake8>=6.0.0             # Linter PEP8
+# pytest>=7.4.0             # Framework de tests unitaires
+# pytest-cov>=4.1.0         # Couverture de tests
+
+
+# =============================================================
+# Notes de compatibilité
+# =============================================================
+# - xgboost>=2.0    : supprime use_label_encoder (déprécié en v1)
+# - pydantic>=2.0   : utilise field_validator (remplace validator v1)
+# - scikit-learn>=1.3: MLPClassifier avec early_stopping stable
+# - pandas>=2.0     : copy_on_write activé (meilleures performances)
+# - streamlit>=1.30 : cache_data et cache_resource disponibles
+#
+# En cas de conflit de versions :
+#   pip install --upgrade pip
+#   pip install -r requirements.txt --upgrade
+# =============================================================
