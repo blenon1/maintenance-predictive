@@ -197,7 +197,7 @@ Trois niveaux d'explicabilité implémentés :
 
 ## 👥 Auteurs
 
-- [Prénom Nom 1]
-- [Prénom Nom 2]
+- William BLENON
+- Véronèse Nikina ZINSOU
 
 **Encadrante :** Sarah Malaeb – EFREI, Data Engineering & AI

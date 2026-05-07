@@ -501,6 +501,14 @@ def _run_inference(sensor_data: SensorData) -> PredictionResponse:
 # Endpoints
 # ─────────────────────────────────────────────────────────────────
 
+@app.get("/")
+async def root():
+    return {
+        "message": "API Maintenance Prédictive opérationnelle",
+        "docs": "/docs",
+        "health": "/health"
+    }
+
 @app.get(
     "/health",
     response_model=HealthResponse,

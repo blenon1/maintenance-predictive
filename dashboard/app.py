@@ -65,6 +65,513 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+
+# ─────────────────────────────────────────────────────────────────
+# THÈME VISUEL PREMIUM – STREAMLIT DASHBOARD
+# À placer juste après st.set_page_config(...)
+# ─────────────────────────────────────────────────────────────────
+
+# Palette globale
+COLORS = {
+    "bg": "#071018",
+    "surface": "#0f172a",
+    "surface_light": "#162033",
+
+    "primary": "#14b8a6",
+    "secondary": "#38bdf8",
+
+    "success": "#34d399",
+    "warning": "#fbbf24",
+    "danger": "#fb7185",
+
+    "text": "#e2e8f0",
+    "muted": "#94a3b8",
+
+    "border": "rgba(255,255,255,0.06)",
+}
+
+# Template Plotly global
+PLOTLY_TEMPLATE = "plotly_dark"
+
+# CSS complet
+st.markdown(f"""
+<style>
+
+/* =========================================================
+   IMPORT FONTS
+========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+html, body, [class*="css"] {{
+    font-family: 'Inter', sans-serif;
+    background-color: {COLORS["bg"]};
+    color: {COLORS["text"]};
+}}
+
+.stApp {{
+    background:
+        radial-gradient(circle at top left,
+            rgba(20,184,166,0.08),
+            transparent 25%),
+
+        radial-gradient(circle at bottom right,
+            rgba(56,189,248,0.08),
+            transparent 25%),
+
+        {COLORS["bg"]};
+}}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes fadeIn {{
+    from {{
+        opacity: 0;
+        transform: translateY(8px);
+    }}
+
+    to {{
+        opacity: 1;
+        transform: translateY(0px);
+    }}
+}}
+
+.fade-in {{
+    animation: fadeIn 0.4s ease-in-out;
+}}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+[data-testid="stSidebar"] {{
+    background:
+        linear-gradient(
+            180deg,
+            rgba(13,23,33,0.96),
+            rgba(7,16,24,0.98)
+        );
+
+    border-right: 1px solid {COLORS["border"]};
+
+    backdrop-filter: blur(12px);
+}}
+
+[data-testid="stSidebar"] * {{
+    color: {COLORS["text"]};
+}}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.main-header {{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(15,23,42,0.95),
+            rgba(17,34,51,0.90)
+        );
+
+    border: 1px solid {COLORS["border"]};
+
+    backdrop-filter: blur(14px);
+
+    padding: 2.3rem;
+
+    border-radius: 24px;
+
+    margin-bottom: 2rem;
+
+    animation: fadeIn 0.4s ease-in-out;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.35),
+        0 0 0 1px rgba(255,255,255,0.03);
+}}
+
+.main-header h1 {{
+
+    color: #f8fafc;
+
+    font-size: 2.4rem;
+
+    font-weight: 700;
+
+    margin-bottom: 0.5rem;
+
+    font-family: 'JetBrains Mono', monospace;
+
+    letter-spacing: -1px;
+}}
+
+.main-header p {{
+    color: {COLORS["muted"]};
+    font-size: 0.95rem;
+    margin: 0;
+}}
+
+/* =========================================================
+   SECTION TITLES
+========================================================= */
+
+.section-title {{
+
+    font-size: 1.1rem;
+
+    font-weight: 600;
+
+    color: #f8fafc;
+
+    margin-bottom: 1rem;
+
+    padding-bottom: 0.55rem;
+
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+
+    font-family: 'JetBrains Mono', monospace;
+}}
+
+/* =========================================================
+   KPI CARDS
+========================================================= */
+
+.kpi-card {{
+
+    background: rgba(15, 23, 42, 0.72);
+
+    border: 1px solid {COLORS["border"]};
+
+    backdrop-filter: blur(12px);
+
+    border-radius: 18px;
+
+    padding: 1.4rem 1rem;
+
+    text-align: center;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+
+    animation: fadeIn 0.4s ease-in-out;
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,0.28);
+}}
+
+.kpi-card:hover {{
+
+    transform: translateY(-4px);
+
+    border-color: rgba(20,184,166,0.45);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,0.38),
+        0 0 18px rgba(20,184,166,0.12);
+}}
+
+.kpi-value {{
+
+    font-size: 2.3rem;
+
+    font-weight: 700;
+
+    font-family: 'JetBrains Mono', monospace;
+
+    color: {COLORS["primary"]};
+}}
+
+.kpi-label {{
+
+    color: {COLORS["muted"]};
+
+    font-size: 0.74rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.5px;
+
+    margin-top: 0.45rem;
+}}
+
+.kpi-alert {{
+    color: {COLORS["danger"]} !important;
+}}
+
+.kpi-warning {{
+    color: {COLORS["warning"]} !important;
+}}
+
+.kpi-ok {{
+    color: {COLORS["success"]} !important;
+}}
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.badge-danger {{
+
+    background: rgba(251,113,133,0.12);
+
+    color: {COLORS["danger"]};
+
+    border: 1px solid rgba(251,113,133,0.3);
+
+    padding: 0.25rem 0.7rem;
+
+    border-radius: 999px;
+
+    font-size: 0.72rem;
+
+    font-weight: 600;
+}}
+
+.badge-ok {{
+
+    background: rgba(52,211,153,0.12);
+
+    color: {COLORS["success"]};
+
+    border: 1px solid rgba(52,211,153,0.3);
+
+    padding: 0.25rem 0.7rem;
+
+    border-radius: 999px;
+
+    font-size: 0.72rem;
+
+    font-weight: 600;
+}}
+
+/* =========================================================
+   PREDICTION BOX
+========================================================= */
+
+.prediction-box {{
+
+    border-radius: 22px;
+
+    padding: 2rem;
+
+    text-align: center;
+
+    margin-top: 1rem;
+
+    backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    animation: fadeIn 0.4s ease-in-out;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.35);
+}}
+
+.prediction-danger {{
+    background: rgba(190, 24, 93, 0.12);
+    border-color: rgba(244, 63, 94, 0.35);
+}}
+
+.prediction-safe {{
+    background: rgba(5, 150, 105, 0.12);
+    border-color: rgba(16, 185, 129, 0.35);
+}}
+
+.prediction-title {{
+
+    font-size: 1.5rem;
+
+    font-weight: 700;
+
+    color: #f8fafc;
+
+    margin-bottom: 0.8rem;
+
+    font-family: 'JetBrains Mono', monospace;
+}}
+
+.prediction-proba {{
+
+    font-size: 3.5rem;
+
+    font-weight: 700;
+
+    margin: 1rem 0;
+
+    font-family: 'JetBrains Mono', monospace;
+}}
+
+/* =========================================================
+   STREAMLIT METRICS
+========================================================= */
+
+[data-testid="stMetric"] {{
+
+    background: rgba(15,23,42,0.72);
+
+    border: 1px solid {COLORS["border"]};
+
+    border-radius: 18px;
+
+    padding: 1rem;
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,0.25);
+
+    transition: 0.25s ease;
+
+    animation: fadeIn 0.4s ease-in-out;
+}}
+
+[data-testid="stMetric"]:hover {{
+    transform: translateY(-3px);
+}}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.stButton > button {{
+
+    background:
+        linear-gradient(
+            135deg,
+            {COLORS["secondary"]},
+            {COLORS["primary"]}
+        );
+
+    color: white;
+
+    border: none;
+
+    border-radius: 14px;
+
+    padding: 0.65rem 1.25rem;
+
+    font-weight: 600;
+
+    transition: all 0.25s ease;
+
+    box-shadow:
+        0 8px 18px rgba(20,184,166,0.25);
+}}
+
+.stButton > button:hover {{
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 24px rgba(20,184,166,0.35);
+
+    filter: brightness(1.05);
+}}
+
+/* =========================================================
+   SELECTBOX / INPUTS / SLIDERS
+========================================================= */
+
+.stSelectbox div[data-baseweb="select"] > div,
+.stSlider,
+.stTextInput > div > div > input,
+.stNumberInput input {{
+
+    background: rgba(15,23,42,0.72) !important;
+
+    border: 1px solid rgba(255,255,255,0.05) !important;
+
+    border-radius: 12px !important;
+
+    color: {COLORS["text"]} !important;
+}}
+
+/* =========================================================
+   DATAFRAME
+========================================================= */
+
+[data-testid="stDataFrame"] {{
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255,255,255,0.04);
+}}
+
+/* =========================================================
+   ALERTS
+========================================================= */
+
+.stAlert {{
+    border-radius: 16px;
+}}
+
+/* =========================================================
+   TABS
+========================================================= */
+
+.stTabs [data-baseweb="tab-list"] {{
+    gap: 10px;
+}}
+
+.stTabs [data-baseweb="tab"] {{
+
+    background: rgba(15,23,42,0.72);
+
+    border-radius: 12px;
+
+    padding: 0.5rem 1rem;
+}}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {{
+    width: 10px;
+}}
+
+::-webkit-scrollbar-track {{
+    background: {COLORS["bg"]};
+}}
+
+::-webkit-scrollbar-thumb {{
+    background: #1e293b;
+    border-radius: 10px;
+}}
+
+::-webkit-scrollbar-thumb:hover {{
+    background: #334155;
+}}
+
+/* =========================================================
+   PLOTLY CONTAINER
+========================================================= */
+
+.js-plotly-plot {{
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    background: rgba(15,23,42,0.45);
+
+    border: 1px solid rgba(255,255,255,0.04);
+
+    padding: 0.5rem;
+}}
+
+</style>
+""", unsafe_allow_html=True)
 # ─────────────────────────────────────────────────────────────────
 # Styles CSS personnalisés
 # ─────────────────────────────────────────────────────────────────
@@ -130,7 +637,7 @@ st.markdown("""
     /* Badges de statut */
     .badge-danger {
         background: rgba(255, 107, 107, 0.15);
-        color: #ff6b6b;
+        color: #ffff;
         border: 1px solid #ff6b6b;
         padding: 0.2rem 0.7rem;
         border-radius: 20px;
@@ -204,6 +711,54 @@ st.markdown("""
 # ─────────────────────────────────────────────────────────────────
 # Chargement des données et modèles (mis en cache)
 # ─────────────────────────────────────────────────────────────────
+
+def apply_dark_theme(fig):
+    """
+    Applique le thème graphique premium à toutes les figures Plotly.
+    """
+
+    fig.update_layout(
+        template=PLOTLY_TEMPLATE,
+
+        paper_bgcolor="rgba(15,23,42,0.65)",
+        plot_bgcolor="rgba(15,23,42,0.35)",
+
+        font=dict(
+            family="Inter",
+            color=COLORS["text"],
+            size=13,
+        ),
+
+        title_font=dict(
+            family="JetBrains Mono",
+            size=18,
+            color="#f8fafc",
+        ),
+
+        legend=dict(
+            bgcolor="rgba(0,0,0,0)",
+            font=dict(color=COLORS["muted"]),
+        ),
+
+        margin=dict(
+            t=40,
+            b=40,
+            l=20,
+            r=20,
+        ),
+    )
+
+    fig.update_xaxes(
+        gridcolor="rgba(255,255,255,0.05)",
+        zerolinecolor="rgba(255,255,255,0.05)",
+    )
+
+    fig.update_yaxes(
+        gridcolor="rgba(255,255,255,0.05)",
+        zerolinecolor="rgba(255,255,255,0.05)",
+    )
+
+    return fig
 
 @st.cache_data
 def load_data() -> tuple[pd.DataFrame, np.ndarray, np.ndarray, np.ndarray, np.ndarray, list]:
